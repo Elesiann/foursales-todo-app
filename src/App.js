@@ -4,8 +4,8 @@ import React, { useState } from "react";
 export function App() {
   const [values, setValues] = useState({
     atividade: "",
-    trabalho: false,
-    pessoal: true,
+    trabalho: true,
+    pessoal: false,
   });
 
   const [atividades, setAtividades] = useState([]);
@@ -41,6 +41,7 @@ export function App() {
         {/* <textarea name="" id="" cols="20" rows="5" placeholder="Descrição"></textarea> <br /> */}
         <input
           name="trabalho"
+          id="trabalho"
           type="radio"
           checked={values.trabalho}
           onChange={() => {
@@ -51,13 +52,14 @@ export function App() {
 
         <input
           name="pessoal"
+          id="pessoal"
           type="radio"
           checked={values.pessoal}
           onChange={() => {
             setValues({ ...values, trabalho: false, pessoal: true });
           }}
         />
-        <label htmlFor="trabalho">Pessoal</label>
+        <label htmlFor="pessoal">Pessoal</label>
 
         <button type="submit">Criar</button>
       </form>
