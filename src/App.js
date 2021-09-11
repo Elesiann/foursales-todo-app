@@ -2,54 +2,82 @@ import "./App.css";
 import React, { useState } from "react";
 
 export function App() {
-  const [value, setValue] = useState({
+  const [values, setValues] = useState({
+    atividade: "",
     trabalho: false,
     pessoal: true,
   });
 
-  const [atividades, setAtividades] = useState({
-    trabalho: ["trabalho", "oi"],
-    pessoal: ["pessoal", "oieeeeeeeeeeeeeee"],
-  });
+  const [atividades, setAtividades] = useState([]);
+
+  function handleChange(event) {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
+    setAtividades([
+      ...atividades,
+      {
+        nome: values.atividade,
+        checkTrabalho: values.trabalho,
+        checkPessoal: values.pessoal,
+      },
+    ]);
   }
 
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
-        <input type="text" /> <br />
-        <textarea name="" id="" cols="20" rows="5"></textarea> <br />
         <input
-          name="radio"
-          type="radio"
-          checked={value.pessoal}
-          id="pessoal"
-          onChange={() => {
-            setValue({ ...value, pessoal: true, trabalho: false });
-          }}
-        />{" "}
-        <label htmlFor="pessoal">Pessoal</label>
+          name="atividade"
+          type="text"
+          value={values.atividade}
+          onChange={handleChange}
+        />
+        {/* <textarea name="" id="" cols="20" rows="5" placeholder="Descrição"></textarea> <br /> */}
         <input
-          name="radio"
+          name="trabalho"
           type="radio"
-          checked={value.trabalho}
-          id="trabalho"
+          checked={values.trabalho}
           onChange={() => {
-            setValue({ ...value, pessoal: false, trabalho: true });
+            setValues({ ...values, pessoal: false, trabalho: true });
           }}
-        />{" "}
-        <label htmlFor="trabalho">Trabalho</label> <br />
+        />
+        <label htmlFor="trabalho">Trabalho</label>
+
+        <input
+          name="pessoal"
+          type="radio"
+          checked={values.pessoal}
+          onChange={() => {
+            setValues({ ...values, trabalho: false, pessoal: true });
+          }}
+        />
+        <label htmlFor="trabalho">Pessoal</label>
+
         <button type="submit">Criar</button>
       </form>
 
       <div>
-        {value.trabalho === true &&
-          atividades.trabalho.map((trabalhos) => <div>{trabalhos}</div>)}
+      <h1>Trabalhos</h1>
+        {atividades.map(
+          (atividade) =>
+            atividade.checkTrabalho === true && (
+              <div>Todo: {atividade.nome}</div>
+            )
+        )}
 
-        {value.pessoal === true &&
-          atividades.pessoal.map((pessoal) => <div>{pessoal}</div>)}
+<h1>Pessoal</h1>
+        {atividades.map(
+          (atividade) =>
+            atividade.checkPessoal === true && (
+              <div>Todo: {atividade.nome}</div>
+            )
+        )}
       </div>
     </div>
   );
