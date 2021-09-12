@@ -1,8 +1,10 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, setState } from "react";
 
 export function App() {
   const [values, setValues] = useState({
+    id: Date.now(),
+    descricao: "",
     atividade: "",
     trabalho: true,
     pessoal: false,
@@ -14,6 +16,7 @@ export function App() {
     setValues({
       ...values,
       [event.target.name]: event.target.value,
+      [event.target.descricao]: event.target.descricao,
     });
   }
 
@@ -22,14 +25,23 @@ export function App() {
     setAtividades([
       ...atividades,
       {
+        id: values.id,
         nome: values.atividade,
+        descricao: values.descricao,
         checkTrabalho: values.trabalho,
         checkPessoal: values.pessoal,
       },
     ]);
   }
 
+  function deleteTodo(id) {
+    const updatedTodos = [...values].filter((values) => values.id !== id);
+
+    setValues(updatedTodos);
+  }
+
   return (
+    // ==========================================================================================
     <div className="App">
       <form onSubmit={handleSubmit}>
         <input
@@ -38,7 +50,14 @@ export function App() {
           value={values.atividade}
           onChange={handleChange}
         />
-        {/* <textarea name="" id="" cols="20" rows="5" placeholder="Descrição"></textarea> <br /> */}
+        <input
+          maxLength="100"
+          name="descricao"
+          type="text"
+          value={values.descricao}
+          onChange={handleChange}
+        />
+        <br />
         <input
           name="trabalho"
           id="trabalho"
@@ -49,7 +68,6 @@ export function App() {
           }}
         />
         <label htmlFor="trabalho">Trabalho</label>
-
         <input
           name="pessoal"
           id="pessoal"
@@ -60,27 +78,41 @@ export function App() {
           }}
         />
         <label htmlFor="pessoal">Pessoal</label>
-
         <button type="submit">Criar</button>
       </form>
+      {/* ========================================================================================== */}
 
-      <div>
-      <h1>Trabalhos</h1>
-        {atividades.map(
-          (atividade) =>
-            atividade.checkTrabalho === true && (
-              <div>Todo: {atividade.nome}</div>
-            )
-        )}
+      {/* ========================================================================================== */}
+      <div key={values.id}>
+        <div>
+          <h1>Trabalhos</h1>
+          {atividades.map(
+            (atividade) =>
+              atividade.checkTrabalho === true && (
+                <div>
+                  Todo: {atividade.nome} <br />
+                  descricao: {atividade.descricao}
+                  <button onClick={deleteTodo}>deletar</button>
+                </div>
+              )
+          )}
+        </div>
 
-<h1>Pessoal</h1>
-        {atividades.map(
-          (atividade) =>
-            atividade.checkPessoal === true && (
-              <div>Todo: {atividade.nome}</div>
-            )
-        )}
+        <div key={values.id}>
+          <h1>Pessoal</h1>
+          {atividades.map(
+            (atividade) =>
+              atividade.checkPessoal === true && (
+                <div>
+                  Todo: {atividade.nome} <br />
+                  descricao: {atividade.descricao}
+                  <button onClick={deleteTodo}>deletar</button>
+                </div>
+              )
+          )}
+        </div>
       </div>
     </div>
+    // ==================================================================================================
   );
 }
