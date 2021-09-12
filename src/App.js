@@ -2,13 +2,15 @@ import "./App.css";
 import React, { useState, setState } from "react";
 
 export function App() {
-  const [values, setValues] = useState({
-    id: Date.now(),
-    descricao: "",
-    atividade: "",
-    trabalho: true,
-    pessoal: false,
-  });
+  const [values, setValues] = useState([
+    {
+      id: new Date(),
+      descricao: "",
+      atividade: "",
+      trabalho: true,
+      pessoal: false,
+    },
+  ]);
 
   const [atividades, setAtividades] = useState([]);
 
@@ -35,9 +37,11 @@ export function App() {
   }
 
   function deleteTodo(id) {
-    const updatedTodos = [...values].filter((values) => values.id !== id);
-
-    setValues(updatedTodos);
+    const updatedTodos = [...atividades].filter(
+      (atividades) => atividades.id !== id
+    );
+    console.log(values.id);
+    setAtividades(updatedTodos);
   }
 
   return (
@@ -77,22 +81,23 @@ export function App() {
             setValues({ ...values, trabalho: false, pessoal: true });
           }}
         />
-        <label htmlFor="pessoal">Pessoal</label>
+        <label htmlFor="pessoal">Pessoal</label> <br />
         <button type="submit">Criar</button>
       </form>
       {/* ========================================================================================== */}
 
       {/* ========================================================================================== */}
-      <div key={values.id}>
+      <div id="container" key={values.id}>
         <div>
           <h1>Trabalhos</h1>
           {atividades.map(
             (atividade) =>
               atividade.checkTrabalho === true && (
-                <div>
+                <div className="todos">
                   Todo: {atividade.nome} <br />
-                  descricao: {atividade.descricao}
-                  <button onClick={deleteTodo}>deletar</button>
+                  descricao: {atividade.descricao} <br />
+                  id: {values.id} <br />
+                  <button onClick={() => deleteTodo()}>deletar</button>
                 </div>
               )
           )}
@@ -103,10 +108,11 @@ export function App() {
           {atividades.map(
             (atividade) =>
               atividade.checkPessoal === true && (
-                <div>
+                <div className="todos">
                   Todo: {atividade.nome} <br />
-                  descricao: {atividade.descricao}
-                  <button onClick={deleteTodo}>deletar</button>
+                  descricao: {atividade.descricao} <br />
+                  id: {values.id} <br />
+                  <button onClick={() => deleteTodo()}>deletar</button>
                 </div>
               )
           )}
