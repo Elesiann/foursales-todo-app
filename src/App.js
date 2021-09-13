@@ -8,8 +8,8 @@ export function App() {
       descricao: "",
       atividade: "",
       trabalho: true,
-      pessoal: false
-    }
+      pessoal: false,
+    },
   ]);
 
   const [atividades, setAtividades] = useState([]);
@@ -18,10 +18,12 @@ export function App() {
     setValues({
       ...values,
       [event.target.name]: event.target.value,
-      [event.target.descricao]: event.target.descricao
+      [event.target.descricao]: event.target.descricao,
     });
   }
 
+  // quando o usuário aperta o botão criar, percorre todo o array atividades
+  // e seta os values
   function handleSubmit(event) {
     event.preventDefault();
     setAtividades([
@@ -31,13 +33,36 @@ export function App() {
         nome: values.atividade,
         descricao: values.descricao,
         checkTrabalho: values.trabalho,
-        checkPessoal: values.pessoal
-      }
+        checkPessoal: values.pessoal,
+      },
     ]);
   }
 
+  //percorre o array atividades, filtra a atividade pelo ID e a deleta
   function deleteTodo(id) {
     const updatedTodos = atividades.filter((atividade) => atividade.id !== id);
+
+    setAtividades(updatedTodos);
+  }
+
+  function editTodo(id) {
+    const updatedTodos = atividades.map((atividade) =>
+    atividade.id === id && atividade.checkTrabalho === true
+    ? {
+        ...atividade,
+        nome: "oiasdasda",
+        checkTrabalho: false,
+        checkPessoal: true
+      }
+    : atividade.id === id && atividade.checkPessoal === true
+    ? {
+        ...atividade,
+        nome: "oiasdasda",
+        checkTrabalho: true,
+        checkPessoal: false
+      }
+    : atividade
+    );
 
     setAtividades(updatedTodos);
   }
@@ -94,10 +119,10 @@ export function App() {
                 <div className="todos" key={atividade.id}>
                   Todo: {atividade.nome} <br />
                   descricao: {atividade.descricao} <br />
-                  id: {atividade.id} <br />
                   <button onClick={() => deleteTodo(atividade.id)}>
                     deletar
                   </button>
+                  <button onClick={() => editTodo(atividade.id)}>editar</button>
                 </div>
               )
           )}
@@ -111,10 +136,10 @@ export function App() {
                 <div className="todos" key={atividade.id}>
                   Todo: {atividade.nome} <br />
                   descricao: {atividade.descricao} <br />
-                  id: {atividade.id} <br />
                   <button onClick={() => deleteTodo(atividade.id)}>
                     deletar
                   </button>
+                  <button onClick={() => editTodo(atividade.id)}>editar</button>
                 </div>
               )
           )}
