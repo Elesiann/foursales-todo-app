@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
 body {
   background-color: rgb(49, 49, 49);
   color: rgb(224, 224, 224);
@@ -8,16 +14,65 @@ input {
   margin: 0.25rem;
 }
 
-button {
-  padding-inline: 2rem;
-  padding-block: .25rem;
+form button {
+  padding: .75rem;
+  border-radius: 5px;
 }
 
-.todos button {
-  padding: 0;
+button {
+  background-color: rgb(158, 158, 158);
+  padding-inline: 2rem;
+  padding-block: 0.25rem;
+  transition: .2s;
+}
+
+button:hover {
+  color: rgb(32, 32, 32);
+  cursor: pointer;
+  background-color: #e7e7e7;
+}
+
+#formContainer {
+  display: flex;
+  justify-content: center;
+}
+
+#inputForm {
+  padding: 2rem 10rem;
+  outline: 1px solid #e7e7e7;
+}
+
+#criarButton {
+  width: 100%;
+}
+
+#todosContainer button {
+  margin-inline: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  padding-inline: 3rem;
+  border-radius: 15px;
+}
+
+.todosContainer {
+  justify-content: center;
+  display: flex;
+  margin-top: .5rem;
+}
+
+.todos h2 {
+  margin-top: 1rem;
+}
+
+.todos {
+  width: 1024px;
+  margin-top: 0.25rem;
+  text-align: center;
+  background-color: rgb(92, 92, 92);
+  border-radius: 10px;
 }
 
 .App {
   text-align: center;
 }
-

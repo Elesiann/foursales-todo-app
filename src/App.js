@@ -47,21 +47,21 @@ export function App() {
 
   function editTodo(id) {
     const updatedTodos = atividades.map((atividade) =>
-    atividade.id === id && atividade.checkTrabalho === true
-    ? {
-        ...atividade,
-        nome: "oiasdasda",
-        checkTrabalho: false,
-        checkPessoal: true
-      }
-    : atividade.id === id && atividade.checkPessoal === true
-    ? {
-        ...atividade,
-        nome: "oiasdasda",
-        checkTrabalho: true,
-        checkPessoal: false
-      }
-    : atividade
+      atividade.id === id && atividade.checkTrabalho === true
+        ? {
+            ...atividade,
+            nome: "oiasdasda",
+            checkTrabalho: false,
+            checkPessoal: true,
+          }
+        : atividade.id === id && atividade.checkPessoal === true
+        ? {
+            ...atividade,
+            nome: "oiasdasda",
+            checkTrabalho: true,
+            checkPessoal: false,
+          }
+        : atividade
     );
 
     setAtividades(updatedTodos);
@@ -70,59 +70,71 @@ export function App() {
   return (
     // ==========================================================================================
     <div className="App">
-      <form onSubmit={handleSubmit}>
-        <input
-          name="atividade"
-          type="text"
-          value={values.atividade}
-          onChange={handleChange}
-        />
-        <input
-          maxLength="100"
-          name="descricao"
-          type="text"
-          value={values.descricao}
-          onChange={handleChange}
-        />
-        <br />
-        <input
-          name="trabalho"
-          id="trabalho"
-          type="radio"
-          checked={values.trabalho}
-          onChange={() => {
-            setValues({ ...values, pessoal: false, trabalho: true });
-          }}
-        />
-        <label htmlFor="trabalho">Trabalho</label>
-        <input
-          name="pessoal"
-          id="pessoal"
-          type="radio"
-          checked={values.pessoal}
-          onChange={() => {
-            setValues({ ...values, trabalho: false, pessoal: true });
-          }}
-        />
-        <label htmlFor="pessoal">Pessoal</label> <br />
-        <button type="submit">Criar</button>
-      </form>
+      <div id="formContainer">
+        <form id="inputForm" onSubmit={handleSubmit}>
+          <input
+            name="atividade"
+            type="text"
+            value={values.atividade}
+            onChange={handleChange}
+            placeholder="O que deve ser feito?"
+            required
+          />
+          <input
+            maxLength="100"
+            name="descricao"
+            type="text"
+            value={values.descricao}
+            onChange={handleChange}
+            placeholder="Descrição"
+            required
+          />
+          <h4>Categoria</h4>
+          <input
+            name="trabalho"
+            id="trabalho"
+            type="radio"
+            checked={values.trabalho}
+            
+            onChange={() => {
+              setValues({ ...values, pessoal: false, trabalho: true });
+            }}
+          />
+          <label htmlFor="trabalho"> Trabalho</label>
+          <input
+            name="pessoal"
+            id="pessoal"
+            type="radio"
+            checked={values.pessoal}
+            
+            onChange={() => {
+              setValues({ ...values, trabalho: false, pessoal: true });
+            }}
+          />
+          <label htmlFor="pessoal"> Pessoal</label> <br />
+          <button id="criarButton" type="submit">
+            Criar
+          </button>
+        </form>
+      </div>
       {/* ========================================================================================== */}
 
       {/* ========================================================================================== */}
-      <div id="container">
+      <div id="todosContainer">
         <div>
           <h1>Trabalhos</h1>
           {atividades.map(
             (atividade) =>
               atividade.checkTrabalho === true && (
+                <div className="todosContainer">
                 <div className="todos" key={atividade.id}>
-                  Todo: {atividade.nome} <br />
-                  descricao: {atividade.descricao} <br />
+                  <h2> {atividade.nome}</h2>
+                  <p>{atividade.descricao}</p>
                   <button onClick={() => deleteTodo(atividade.id)}>
-                    deletar
+                    Apagar
                   </button>
-                  <button onClick={() => editTodo(atividade.id)}>editar</button>
+                  <button onClick={() => editTodo(atividade.id)}>Editar</button>
+                </div>
                 </div>
               )
           )}
@@ -137,9 +149,9 @@ export function App() {
                   Todo: {atividade.nome} <br />
                   descricao: {atividade.descricao} <br />
                   <button onClick={() => deleteTodo(atividade.id)}>
-                    deletar
+                  Apagar
                   </button>
-                  <button onClick={() => editTodo(atividade.id)}>editar</button>
+                  <button onClick={() => editTodo(atividade.id)}>Editar</button>
                 </div>
               )
           )}
