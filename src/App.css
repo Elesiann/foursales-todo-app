@@ -1,35 +1,43 @@
+/* reset css */
 * {
   margin: 0;
   padding: 0;
   border: none;
 }
 
+:root {
+  --background-color: rgb(49, 49, 49);
+  --background-color-darker: rgb(32, 32, 32);
+  --background-color-lighter: rgb(110, 110, 110);
+  --text-color: rgb(224, 224, 224);
+  --button-color: rgb(158, 158, 158);
+  --button-color-hover: #e7e7e7;
+}
+
 body {
-  background-color: rgb(49, 49, 49);
-  color: rgb(224, 224, 224);
+  background-color: var(--background-color-darker);
+  color: var(--text-color);
 }
 
 input {
-  padding: 0.5rem;
+  padding: 1rem;
   margin: 0.25rem;
 }
 
 form button {
-  padding: .75rem;
+  padding: 0.75rem;
   border-radius: 5px;
 }
 
 button {
-  background-color: rgb(158, 158, 158);
-  padding-inline: 2rem;
-  padding-block: 0.25rem;
-  transition: .2s;
+  background-color: var(--button-color);
+  transition: 0.2s;
 }
 
 button:hover {
-  color: rgb(32, 32, 32);
+  color: var(--background-color-darker);
   cursor: pointer;
-  background-color: #e7e7e7;
+  background-color: var(--button-color-hover);
 }
 
 #formContainer {
@@ -38,8 +46,11 @@ button:hover {
 }
 
 #inputForm {
-  padding: 2rem 10rem;
-  outline: 1px solid #e7e7e7;
+  padding: 2rem 15rem;
+}
+
+#inputForm h2 {
+  margin-block: 1rem;
 }
 
 #criarButton {
@@ -58,21 +69,23 @@ button:hover {
 .todosContainer {
   justify-content: center;
   display: flex;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
-.todos h2 {
+.todos h2, button {
   margin-top: 1rem;
 }
+
 
 .todos {
   width: 1024px;
   margin-top: 0.25rem;
   text-align: center;
-  background-color: rgb(92, 92, 92);
+  background-color: var(--background-color-lighter);
   border-radius: 10px;
 }
 
 .App {
+
   text-align: center;
 }

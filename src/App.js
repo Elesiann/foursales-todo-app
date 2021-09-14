@@ -50,14 +50,12 @@ export function App() {
       atividade.id === id && atividade.checkTrabalho === true
         ? {
             ...atividade,
-            nome: "oiasdasda",
             checkTrabalho: false,
             checkPessoal: true,
           }
         : atividade.id === id && atividade.checkPessoal === true
         ? {
             ...atividade,
-            nome: "oiasdasda",
             checkTrabalho: true,
             checkPessoal: false,
           }
@@ -89,13 +87,12 @@ export function App() {
             placeholder="Descrição"
             required
           />
-          <h4>Categoria</h4>
+          <h2>Categoria</h2>
           <input
             name="trabalho"
             id="trabalho"
             type="radio"
             checked={values.trabalho}
-            
             onChange={() => {
               setValues({ ...values, pessoal: false, trabalho: true });
             }}
@@ -106,7 +103,6 @@ export function App() {
             id="pessoal"
             type="radio"
             checked={values.pessoal}
-            
             onChange={() => {
               setValues({ ...values, trabalho: false, pessoal: true });
             }}
@@ -127,14 +123,16 @@ export function App() {
             (atividade) =>
               atividade.checkTrabalho === true && (
                 <div className="todosContainer">
-                <div className="todos" key={atividade.id}>
-                  <h2> {atividade.nome}</h2>
-                  <p>{atividade.descricao}</p>
-                  <button onClick={() => deleteTodo(atividade.id)}>
-                    Apagar
-                  </button>
-                  <button onClick={() => editTodo(atividade.id)}>Editar</button>
-                </div>
+                  <div className="todos" key={atividade.id}>
+                    <h2> {atividade.nome}</h2>
+                    <p>{atividade.descricao}</p>
+                    <button onClick={() => deleteTodo(atividade.id)}>
+                      Apagar
+                    </button>
+                    <button onClick={() => editTodo(atividade.id)}>
+                      Editar
+                    </button>
+                  </div>
                 </div>
               )
           )}
@@ -145,13 +143,17 @@ export function App() {
           {atividades.map(
             (atividade) =>
               atividade.checkPessoal === true && (
-                <div className="todos" key={atividade.id}>
-                  Todo: {atividade.nome} <br />
-                  descricao: {atividade.descricao} <br />
-                  <button onClick={() => deleteTodo(atividade.id)}>
-                  Apagar
-                  </button>
-                  <button onClick={() => editTodo(atividade.id)}>Editar</button>
+                <div className="todosContainer">
+                  <div className="todos" key={atividade.id}>
+                    <h2> {atividade.nome}</h2>
+                    <p>{atividade.descricao}</p>
+                    <button onClick={() => deleteTodo(atividade.id)}>
+                      Apagar
+                    </button>
+                    <button onClick={() => editTodo(atividade.id)}>
+                      Editar
+                    </button>
+                  </div>
                 </div>
               )
           )}
