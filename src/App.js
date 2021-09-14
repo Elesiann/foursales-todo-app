@@ -80,6 +80,7 @@ export function App() {
       <div id="formContainer">
         <form id="inputForm" onSubmit={handleSubmit}>
           <input
+            maxLength="50"
             name="atividade"
             type="text"
             value={values.atividade}
