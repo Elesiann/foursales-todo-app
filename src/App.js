@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, setState } from "react";
+import React, { useState } from "react";
 import uuid from "react-uuid";
 
 export function App() {
@@ -11,9 +11,11 @@ export function App() {
       pessoal: false,
     },
   ]);
+  // ============================================================================================
 
   const [atividades, setAtividades] = useState([]);
 
+  // percorre o useState values, pega seu nome e descrição
   function handleChange(event) {
     setValues({
       ...values,
@@ -21,9 +23,10 @@ export function App() {
       [event.target.descricao]: event.target.descricao,
     });
   }
+  // ============================================================================================
 
   // quando o usuário aperta o botão criar, percorre todo o array atividades
-  // e seta os values
+  // e seta os seus determinados valores
   function handleSubmit(event) {
     event.preventDefault();
     setAtividades([
@@ -37,14 +40,19 @@ export function App() {
       },
     ]);
   }
+  // ============================================================================================
+
 
   //percorre o array atividades, filtra a atividade pelo ID e a deleta
   function deleteTodo(id) {
     const updatedTodos = atividades.filter((atividade) => atividade.id !== id);
-
     setAtividades(updatedTodos);
   }
+  // ============================================================================================
 
+
+  //função que mapeia as atividades, checa se o id da atividade é o mesmo
+  // e verifica se o valor de checkTrabalho/checkPessoal é true, então a transfere para a outra categoria
   function editTodo(id) {
     const updatedTodos = atividades.map((atividade) =>
       atividade.id === id && atividade.checkTrabalho === true
@@ -64,6 +72,7 @@ export function App() {
 
     setAtividades(updatedTodos);
   }
+  // ============================================================================================
 
   return (
     // ==========================================================================================
@@ -97,7 +106,7 @@ export function App() {
               setValues({ ...values, pessoal: false, trabalho: true });
             }}
           />
-          <label htmlFor="trabalho"> Trabalho</label>
+          <label htmlFor="trabalho"> Trabalho </label>
           <input
             name="pessoal"
             id="pessoal"
@@ -107,7 +116,7 @@ export function App() {
               setValues({ ...values, trabalho: false, pessoal: true });
             }}
           />
-          <label htmlFor="pessoal"> Pessoal</label> <br />
+          <label htmlFor="pessoal"> Pessoal </label>
           <button id="criarButton" type="submit">
             Criar
           </button>
