@@ -11,6 +11,90 @@ export function App() {
       pessoal: false,
     },
   ]);
+
+  // export function ListTodos() {
+  //   const [todos, setTodos] = useState([]);
+
+  //   function toggleComplete(id) {
+  //     const updatedTodos = [...todos].map((todo) => {
+  //       if (todo.id === id) {
+  //         todo.completed = !todo.completed;
+  //       }
+  //       return todo;
+  //     });
+
+  //     setTodos(updatedTodos);
+  //   }
+
+  //   function deleteTodo(id) {
+  //     const updatedTodos = [...todos].filter((todo) => todo.id !== id);
+
+  //     setTodos(updatedTodos);
+  //   }
+
+  //   {
+  //     todos.map((todo) => (
+  //       <div id="todo__container" key={todo.id}>
+  //         <div id="todo__content">
+  //           <div id="todo__info">
+  //             {/* conditional rendering */}
+  //             {/* se o todoEditing corresponder ao id do todo, mostra dois inputs
+  //               para que o usuário consiga editar o todo, senão, mostre somente a div padrão */}
+  //             {todoEditing === todo.id ? (
+  //               <form>
+  //                 <div>
+  //                   <input
+  //                     type="text"
+  //                     required
+  //                     onChange={(event) => setEditingText(event.target.value)}
+  //                     placeholder={todo.title}
+  //                     value={editingText}
+  //                   />
+  //                   <br />
+  //                   <input
+  //                     type="text"
+  //                     required
+  //                     onChange={(event) =>
+  //                       setEditingDescription(event.target.value)
+  //                     }
+  //                     maxLength={"100"}
+  //                     placeholder={todo.desc}
+  //                     value={editingDescription}
+  //                   />
+  //                 </div>
+  //               </form>
+  //             ) : (
+  //               <div>
+  //                 <h3>{todo.title}</h3>
+  //                 <p>{todo.desc}</p>
+  //               </div>
+  //             )}
+  //           </div>
+  //           <div id="todo__buttons">
+  //             <input
+  //               type="checkbox"
+  //               onChange={() => toggleComplete(todo.id)}
+  //               checked={todo.completed}
+  //             />
+  //             {todoEditing === todo.id ? (
+  //               <button type="submit" onClick={() => editTodo(todo.id)}>
+  //                 Enviar edição
+  //               </button>
+  //             ) : (
+  //               <button onClick={() => setTodoEditing(todo.id)} id="todo__edit">
+  //                 Editar
+  //               </button>
+  //             )}
+  //             <button onClick={() => deleteTodo(todo.id)} id="todo__delete">
+  //               Deletar
+  //             </button>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     ));
+  //   }
+  // }
+
   // ============================================================================================
 
   const [atividades, setAtividades] = useState([]);
@@ -33,6 +117,7 @@ export function App() {
       ...atividades,
       {
         id: uuid(),
+        isInEditMode: false,
         nome: values.atividade,
         descricao: values.descricao,
         checkTrabalho: values.trabalho,
@@ -42,7 +127,6 @@ export function App() {
   }
   // ============================================================================================
 
-
   //percorre o array atividades, filtra a atividade pelo ID e a deleta
   function deleteTodo(id) {
     const updatedTodos = atividades.filter((atividade) => atividade.id !== id);
@@ -50,26 +134,18 @@ export function App() {
   }
   // ============================================================================================
 
-
   //função que mapeia as atividades, checa se o id da atividade é o mesmo
   // e verifica se o valor de checkTrabalho/checkPessoal é true, então a transfere para a outra categoria
   function editTodo(id) {
     const updatedTodos = atividades.map((atividade) =>
-      atividade.id === id && atividade.checkTrabalho === true
+      atividade.id === id
         ? {
             ...atividade,
-            checkTrabalho: false,
-            checkPessoal: true,
-          }
-        : atividade.id === id && atividade.checkPessoal === true
-        ? {
-            ...atividade,
-            checkTrabalho: true,
-            checkPessoal: false,
+            isInEditMode: !atividade.isInEditMode,
           }
         : atividade
     );
-
+    console.log(updatedTodos)
     setAtividades(updatedTodos);
   }
   // ============================================================================================
@@ -132,16 +208,27 @@ export function App() {
           {atividades.map(
             (atividade) =>
               atividade.checkTrabalho === true && (
-                <div className="todosContainer">
-                  <div className="todos" key={atividade.id}>
-                    <h2> {atividade.nome}</h2>
-                    <p>{atividade.descricao}</p>
-                    <button onClick={() => deleteTodo(atividade.id)}>
-                      Apagar
-                    </button>
-                    <button onClick={() => editTodo(atividade.id)}>
-                      Editar
-                    </button>
+                <div key={atividade.id} className="todosContainer">
+                  <div className="todos">
+                    {
+                      atividade.isInEditMode ? (
+                        <div>
+                          {/* aqui vai ficar a render  */}
+                          <input type="text" />
+                        </div>
+                      ) : (
+                      <>
+                        <h2> {atividade.nome}</h2>
+                        <p>{atividade.descricao}</p>
+                        <button onClick={() => deleteTodo(atividade.id)}>
+                          Apagar
+                        </button>
+                        <button onClick={() => editTodo(atividade.id)}>
+                          Editar
+                        </button>
+                      </>
+                      )
+                    } 
                   </div>
                 </div>
               )
@@ -153,8 +240,8 @@ export function App() {
           {atividades.map(
             (atividade) =>
               atividade.checkPessoal === true && (
-                <div className="todosContainer">
-                  <div className="todos" key={atividade.id}>
+                <div key={atividade.id} className="todosContainer">
+                  <div className="todos">
                     <h2> {atividade.nome}</h2>
                     <p>{atividade.descricao}</p>
                     <button onClick={() => deleteTodo(atividade.id)}>
